@@ -25,31 +25,55 @@ export default function CareerPlan() {
   const [submittedData, setSubmittedData] = useState(null);
 
   // ---------------- SUBMIT ----------------
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const formData = {
-      mbti: mbtiType,
-      career,
-      status,
-      schoolCollege,
-      degree,
-      studyField,
-      workingField,
-      experience,
-      financial,
-      country,
-      timeCommitment,
-      skills,
-    };
+const formData = {
+  mbti: mbtiType,
+  career,
+  status,
+  experience: Number(experience) || 0,
+  financial,
+  country,
+  time_commitment: Number(timeCommitment) || 0,
+  skills,
+  study_field: studyField,
+working_field: workingField,
+degree,
 
-    // ✅ DO NOT call backend here
-    setSubmittedData(formData);
-  };
+  interests: skills ? skills.split(",").map(s => s.trim()) : [],
+};
+
+
+  try {
+    const res = await fetch("http://127.0.0.1:5000/api/roadmap", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      alert("Failed to generate roadmap");
+      return;
+    }
+
+    // 🔥 THIS is what RoadmapResult should receive
+    setSubmittedData(data.roadmap);
+  } catch (err) {
+    console.error("Roadmap error:", err);
+    alert("Server error");
+  }
+};
+
 
   // ---------------- SHOW ROADMAP ----------------
   if (submittedData) {
-    return <RoadmapResult careerData={submittedData} />;
+    return <RoadmapResult roadmap={submittedData} />;
+
   }
 
   // ---------------- FORM UI ----------------
