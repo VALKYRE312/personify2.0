@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+/* ===== Custom Pastel Theme Add-ons ===== */
+.hero-bg {
+  object-fit: cover;
+  filter: saturate(0.95) contrast(0.95);
+}
+
+.btn-pill {
+  display: inline-block;
+  background: linear-gradient(90deg, #f7c7ce 0%, #f0aeb8 100%);
+  color: #111827;
+  padding: 0.65rem 1.8rem;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 8px 26px rgba(240, 174, 184, 0.18);
+  transition: transform .18s ease, box-shadow .18s ease, opacity .18s;
+}
+
+.btn-pill:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 34px rgba(240, 174, 184, 0.24);
+}
+
+.about-card {
+  transform: translateY(-2rem);
+}
+
+img {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Warm paper background with subtle tint */
+.paper-lines {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(60, 47, 47, 0.06),
+      rgba(60, 47, 47, 0.06)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 0) 22px,
+      rgba(60, 47, 47, 0.18) 23px
+    );
+  opacity: 0.95;
+}
+
+/* Shadows remain subtle */
+.note-shadow {
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.10),
+    0 2px 0 rgba(0,0,0,0.05);
+}
+
+/* Connector curve */
+.flow-curve {
+  fill: none;
+  stroke: rgba(60, 47, 47, 0.35);     /* warm brown line */
+  stroke-width: 2;
+  stroke-dasharray: 4 7;
+  animation: dashMove 7s linear infinite;
+}
+
+/* Custom Scrollbar — Muted Dusty Pink Theme */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2D232E; /* dark background */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CFA4A8; /* dusty muted pink */
+  border-radius: 10px;
+  border: 2px solid #2D232E;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B7898E; /* darker muted pink on hover */
+}
+
+/* ===== Glow animation (global) ===== */
+@keyframes glow {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+    filter: blur(6px) saturate(1);
+    box-shadow: 0 0 18px rgba(234,164,173,0.18);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+    filter: blur(12px) saturate(1.05);
+    box-shadow: 0 0 36px rgba(234,164,173,0.28);
+  }
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+    filter: blur(6px) saturate(1);
+    box-shadow: 0 0 18px rgba(234,164,173,0.18);
+  }
+}
+
+.glow-aura {
+  animation: glow 2.6s ease-in-out infinite;
+  will-change: transform, opacity, filter, box-shadow;
+}
+
+/* Force form labels to stack above inputs */
+label {
+  display: block;
+}
+
+
+
+
+@media (max-width: 640px) {
+  .hero-title { font-size: 2rem !important; }
+  .hero-sub { font-size: 0.95rem !important; }
+  .about-card { padding: 1.5rem !important; }
+}

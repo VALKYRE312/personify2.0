@@ -1,0 +1,15 @@
+Flask
+Flask-Cors
+Flask-SQLAlchemy
+SQLAlchemy
+flask-jwt-extended
+python-dotenv
+psycopg2-binary
+Werkzeug
+reportlab
+Pillow
+boto3
+botocore
+marshmallow
+marshmallow-sqlalchemy
+charset-normalizer
