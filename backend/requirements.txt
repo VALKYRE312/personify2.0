@@ -15,3 +15,4 @@ marshmallow-sqlalchemy
 charset-normalizer
 reportlab
 gunicorn
+google-generativeai
