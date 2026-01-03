@@ -13,3 +13,5 @@ botocore
 marshmallow
 marshmallow-sqlalchemy
 charset-normalizer
+reportlab
+gunicorn
