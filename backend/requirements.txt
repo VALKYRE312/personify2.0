@@ -16,3 +16,4 @@ charset-normalizer
 reportlab
 gunicorn
 google-generativeai
+Authlib
