@@ -14,16 +14,16 @@ def create_app():
         static_url_path="/static"
     )
 
-    # 🔑 REQUIRED for sessions (Google OAuth uses sessions)
-    app.secret_key = "dev-secret"
+    app.secret_key = os.getenv("SECRET_KEY", "dev-secret")
 
-    jwt = JWTManager(app)
+    JWTManager(app)
 
     CORS(
         app,
         resources={r"/api/*": {"origins": [
             "http://localhost:5173",
             "http://127.0.0.1:5173",
+            "https://your-frontend-domain.vercel.app"  # later
         ]}},
         supports_credentials=True,
     )
@@ -52,14 +52,15 @@ def create_app():
     app.register_blueprint(roadmap_bp, url_prefix="/api")
     app.register_blueprint(roadmap_pdf_bp, url_prefix="/api")
 
-    # 🔐 Initialize + register Google OAuth
     init_oauth(app)
     app.register_blueprint(google_bp)
 
     return app
 
 
+# ✅ THIS IS THE KEY LINE
+app = create_app()
+
+
 if __name__ == "__main__":
-    print("✅ Backend running at http://127.0.0.1:5000")
-    app = create_app()
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
