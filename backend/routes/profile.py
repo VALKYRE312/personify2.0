@@ -1,4 +1,4 @@
-from flask import send_from_directory, Blueprint, request, jsonify
+from flask import send_from_directory, Blueprint, request, session, jsonify
 import os
 import time
 from database.db import db
@@ -48,7 +48,8 @@ def get_profile_pic(filename):
 
 
 
-@profile_bp.delete("/delete-account")
+@profile_bp.route("/delete-account", methods=["DELETE"])
+
 @jwt_required()
 def delete_account():
     user_id = get_jwt_identity()
@@ -57,13 +58,8 @@ def delete_account():
     if not user:
         return jsonify({"error": "User not found"}), 404
 
-    # 🔒 Anonymise personal data (DO NOT delete row)
-    user.first_name = None
-    user.last_name = None
-    user.email = None
-    user.birthday = None
-    user.profile_pic = None
-
+    # 🔥 HARD DELETE (THIS IS THE FIX)
+    db.session.delete(user)
     db.session.commit()
 
-    return jsonify({"status": "anonymised"})
+    return jsonify({"success": True})

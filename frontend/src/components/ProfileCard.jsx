@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Button } from "../components/ui/button";
 import { MoreVertical, LogOut, Trash2 } from "lucide-react";
+import api from "../lib/api";
 
 import { Calendar, Mail, User, Camera, Briefcase, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -31,22 +32,27 @@ const handleLogout = () => {
   navigate("/profile");
 };
 
-const handleDeleteProfile = () => {
-  const raw = localStorage.getItem("pa.user");
-  if (raw) {
-    const clearedUser = {
-      first_name: "",
-      last_name: "",
-      email: "",
-      birthday: "",
-    };
-    localStorage.setItem("pa.user", JSON.stringify(clearedUser));
-  }
+const handleDeleteProfile = async () => {
+  try {
 
-  localStorage.removeItem("pa.profilePic");
-  setProfilePic(DEFAULT_AVATAR);
-  setMenuOpen(false);
+
+    // ✅ CLEAR AUTH + LOCAL STATE
+    localStorage.removeItem("pa.token");
+    localStorage.removeItem("pa.user");
+    localStorage.removeItem("pa.profilePic");
+    sessionStorage.clear();
+
+    setProfilePic(DEFAULT_AVATAR);
+    setMenuOpen(false);
+
+    // ✅ REDIRECT OUT
+    navigate("/login");
+  } catch (err) {
+    console.error("Account deletion failed:", err);
+    alert("Failed to delete account. Try again.");
+  }
 };
+
 
 
   
