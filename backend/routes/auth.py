@@ -9,8 +9,11 @@ from models.user import User
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
-@auth_bp.post("/register")
+@auth_bp.post("/register", methods=["POST", "OPTIONS"])
 def register():
+     # ✅ Handle CORS preflight
+    if request.method == "OPTIONS":
+        return "", 200
     data = request.get_json() or {}
 
     first_name = (data.get("first_name") or "").strip()
