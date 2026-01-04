@@ -23,7 +23,7 @@ def create_app():
         resources={r"/api/*": {"origins": [
             "http://localhost:5173",
             "http://127.0.0.1:5173",
-            "https://your-frontend-domain.vercel.app"  # later
+            "https://personify-frontend.onrender.com"  # later
         ]}},
         supports_credentials=True,
     )
