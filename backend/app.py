@@ -32,9 +32,12 @@ def create_app():
     app.config.from_object("config.Config")
     db.init_app(app)
     
+    # 🔴 FORCE SQLAlchemy TO LOAD MODELS FIRST
+    from models import User, Result, GuestResult
+ 
+    
     with app.app_context():
-      db.create_all()
-
+        db.create_all()
 
 
 
