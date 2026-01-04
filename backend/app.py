@@ -23,13 +23,17 @@ def create_app():
         resources={r"/api/*": {"origins": [
             "http://localhost:5173",
             "http://127.0.0.1:5173",
-            "https://personify-frontend.onrender.com"  # later
+            "https://personify.netlify.app",  # later
+            "https://personify.vercel.app"
         ]}},
         supports_credentials=True,
     )
 
     app.config.from_object("config.Config")
     db.init_app(app)
+    
+    with app.app_context():
+        db.create_all()
 
     from routes.analyze import analyze_bp
     from routes.personality import personality_bp
