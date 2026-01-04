@@ -31,9 +31,8 @@ def create_app():
 
     app.config.from_object("config.Config")
     db.init_app(app)
-    
-    with app.app_context():
-        db.create_all()
+
+
 
     from routes.analyze import analyze_bp
     from routes.personality import personality_bp
