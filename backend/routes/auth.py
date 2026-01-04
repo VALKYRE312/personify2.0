@@ -11,58 +11,56 @@ auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
 @auth_bp.route("/register", methods=["POST", "OPTIONS"])
 def register():
-     # ✅ Handle CORS preflight
     if request.method == "OPTIONS":
         return "", 200
-    data = request.get_json() or {}
 
-    first_name = (data.get("first_name") or "").strip()
-    last_name = (data.get("last_name") or "").strip()
-    email = (data.get("email") or "").strip().lower()
-    password = data.get("password") or ""
-    birthday_str = data.get("birthday")  # could be "YYYY-MM-DD" or "MM/DD/YYYY" etc.
+    try:
+        data = request.get_json() or {}
+        print("REGISTER DATA:", data)
 
-    if not all([first_name, last_name, email, password]):
-        return jsonify({"error": "Missing required fields"}), 400
+        first_name = (data.get("first_name") or "").strip()
+        last_name = (data.get("last_name") or "").strip()
+        email = (data.get("email") or "").strip().lower()
+        password = data.get("password") or ""
+        birthday_str = data.get("birthday")
 
-    # check existing email
-    if User.query.filter_by(email=email).first():
-        return jsonify({"error": "Email already registered."}), 409
+        if not all([first_name, last_name, email, password]):
+            return jsonify({"error": "Missing required fields"}), 400
 
-    user = User( # type: ignore
-        first_name=first_name,
-        last_name=last_name,
-        email=email,
-    )
+        if User.query.filter_by(email=email).first():
+            return jsonify({"error": "Email already registered."}), 409
 
-    # ---------- REPLACED BLOCK: accept several common date formats ----------
-    if birthday_str:
-        parsed = None
-        # try common formats (ISO, US, EU)
-        for fmt in ("%Y-%m-%d", "%m/%d/%Y", "%d/%m/%Y"):
-            try:
-                parsed = datetime.strptime(birthday_str, fmt).date()
-                break
-            except ValueError:
-                continue
+        user = User(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+        )
 
-        # optional: fallback to python-dateutil if available (more flexible)
-        if parsed is None:
-            try:
-                from dateutil.parser import parse as dateparse  # pip install python-dateutil
-                parsed = dateparse(birthday_str).date()
-            except Exception:
+        if birthday_str:
+            parsed = None
+            for fmt in ("%Y-%m-%d", "%m/%d/%Y", "%d/%m/%Y"):
+                try:
+                    parsed = datetime.strptime(birthday_str, fmt).date()
+                    break
+                except ValueError:
+                    continue
+
+            if parsed is None:
                 return jsonify({"error": "Invalid birthday format"}), 400
 
-        user.birthday = parsed
-    # -----------------------------------------------------------------------
+            user.birthday = parsed
 
-    user.set_password(password)
+        user.set_password(password)
 
-    db.session.add(user)
-    db.session.commit()
+        db.session.add(user)
+        db.session.commit()
 
-    return jsonify({"user": user.to_dict()}), 201
+        return jsonify({"user": user.to_dict()}), 201
+
+    except Exception as e:
+        print("🔥 REGISTER ERROR:", str(e))
+        return jsonify({"error": "Internal server error"}), 500
+
 
 # =========================
 # LOGIN  ✅ THIS WAS MISSING
