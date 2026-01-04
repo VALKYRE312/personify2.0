@@ -65,7 +65,7 @@ def register():
 # =========================
 # LOGIN  ✅ THIS WAS MISSING
 # =========================
-@auth_bp.post("/login")
+@auth_bp.route("/login", methods=["POST"])
 def login():
     data = request.get_json() or {}
 
