@@ -9,7 +9,7 @@ from models.user import User
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
-@auth_bp.post("/register", methods=["POST", "OPTIONS"])
+@auth_bp.route("/register", methods=["POST", "OPTIONS"])
 def register():
      # ✅ Handle CORS preflight
     if request.method == "OPTIONS":
