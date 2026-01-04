@@ -18,7 +18,7 @@ if (recognition) {
   recognition.lang = "en-US";
   recognition.interimResults = false;
 }
-
+{/* ---------------- LEFT CARD ---------------- */}
 
 // YOUR BASE_PROMPTS (unchanged)
 const BASE_PROMPTS = {
