@@ -14,7 +14,7 @@ MBTI_TONES = {
     "ENTP": "innovative, energetic, adaptive, possibility-driven",
 
     "INFJ": "calm, insightful, purpose-driven, meaning-oriented",
-    "INFP": "gentle, validating, emotionally supportive, values-driven",
+    "INFP": "gentlpersonality_enginee, validating, emotionally supportive, values-driven",
     "ENFJ": "encouraging, motivating, people-focused, growth-oriented",
     "ENFP": "enthusiastic, inspiring, creative, optimism-driven",
 
