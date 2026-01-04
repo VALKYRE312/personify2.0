@@ -64,6 +64,11 @@ def create_app():
 # ✅ THIS IS THE KEY LINE
 app = create_app()
 
+# ✅ ADD THIS **RIGHT BELOW IT**
+@app.route("/")
+def health():
+    return {"status": "ok"}, 200
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
