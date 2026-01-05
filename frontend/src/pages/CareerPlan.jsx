@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import RoadmapResult from "./RoadmapResult";
+import api from "../lib/api";
 
 export default function CareerPlan() {
   // Read values passed from CareerCounseling
@@ -28,46 +29,37 @@ export default function CareerPlan() {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-const formData = {
-  mbti: mbtiType,
-  career,
-  status,
-  experience: Number(experience) || 0,
-  financial,
-  country,
-  time_commitment: Number(timeCommitment) || 0,
-  skills,
-  study_field: studyField,
-working_field: workingField,
-degree,
-
-  interests: skills ? skills.split(",").map(s => s.trim()) : [],
-};
-
+  const formData = {
+    mbti: mbtiType,
+    career,
+    status,
+    experience: Number(experience) || 0,
+    financial,
+    country,
+    time_commitment: Number(timeCommitment) || 0,
+    skills,
+    study_field: studyField,
+    working_field: workingField,
+    degree,
+    interests: skills ? skills.split(",").map(s => s.trim()) : [],
+  };
 
   try {
-    const res = await fetch("http://127.0.0.1:5000/api/roadmap", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    const data = await res.json();
+    const res = await api.post("/roadmap", formData);
+    const data = res.data;
 
     if (!data.success) {
       alert("Failed to generate roadmap");
       return;
     }
 
-    // 🔥 THIS is what RoadmapResult should receive
     setSubmittedData(data.roadmap);
   } catch (err) {
     console.error("Roadmap error:", err);
     alert("Server error");
   }
 };
+
 
 
   // ---------------- SHOW ROADMAP ----------------

@@ -2,8 +2,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import axios from "axios";
+
 import { getGuestId } from "../utils/guest";
+import api from "../lib/api";
 
 /*
   16 statement-style questions (you can replace / tweak wording later)
@@ -117,12 +118,12 @@ export default function QuizPage() {
     setSubmitting(true);
     try {
 const payload = { answers };
-const res = await axios.post("/api/analyze", payload);
+const res = await api.post("/analyze", payload);
 
 const result = res.data;
 
 // ✅ SAVE RESULT AS GUEST
-await axios.post("/api/career/quiz/submit", {
+await api.post("/career/quiz/submit", {
   guest_id: getGuestId(),
   personality_type: result.type,
   career_choice: null, // or selected career later

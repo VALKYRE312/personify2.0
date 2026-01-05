@@ -19,7 +19,7 @@ export default function LoginPage() {
   setError("");
 
   try {
-    const res = await api.post("/api/auth/login", {
+    const res = await api.post("/auth/login", {
       email,
       password,
     });
@@ -124,7 +124,7 @@ if (guestId) {
 <button
   type="button"
   onClick={() => {
-    window.location.href = "http://127.0.0.1:5000/auth/google";
+    window.location.href = "https://personify2-0-1.onrender.com/auth/google";
   }}
   className="flex items-center justify-center w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition"
 >

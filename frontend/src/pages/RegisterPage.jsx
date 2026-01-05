@@ -28,7 +28,7 @@ export default function RegisterPage() {
     setLoading(true);
 
 try {
-  const res = await api.post("/api/auth/register", form);
+  const res = await api.post("/auth/register", form);
 
   // ✅ get token + user from backend
   const token = res.data.access_token;
@@ -48,7 +48,7 @@ try {
   const guestId = sessionStorage.getItem("guest_id");
   if (guestId) {
     await api.post(
-      "/api/career/quiz/merge-results",
+      "/career/quiz/merge-results",
       { guest_id: guestId },
       {
         headers: {
@@ -136,7 +136,7 @@ try {
 <button
   type="button"
   onClick={() => {
-    window.location.href = "http://127.0.0.1:5000/auth/google";
+    window.location.href = "https://personify2-0-1.onrender.com/auth/google";
   }}
   className="flex-1 flex items-center justify-center gap-2 bg-[#2e2219] hover:bg-[#4a3626] p-2 rounded-lg border border-[#5c4433]"
 >

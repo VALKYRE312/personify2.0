@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ChatSidebar from "../components/ChatSidebar";
 import ChatWindow from "../components/ChatWindow";
 import LibraryViewer from "../components/LibraryViewer"; // NEW import
+import api from "../lib/api";
 
 // 🎙️ Web Speech API setup
 const SpeechRecognition =
@@ -262,16 +263,11 @@ async function handleSend() {
       userMessage: text,
     };
 
-    const res = await fetch("/api/therapy/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    const res = await api.post("/therapy/chat", payload);
 
-    if (!res.ok) throw new Error("AI service error");
+const assistantText =
+  res.data?.reply || "Sorry — I couldn't generate a response.";
 
-    const data = await res.json();
-    const assistantText = data.reply || "Sorry — I couldn't generate a response.";
 
 
     speak(assistantText);

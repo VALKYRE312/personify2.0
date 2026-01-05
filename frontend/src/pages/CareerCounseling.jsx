@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePersonality } from "../context/PersonalityStore";
 import { Briefcase, Sparkles } from "lucide-react";
+import api from "../lib/api";
 
 export default function CareerCounseling() {
   const { result } = usePersonality();
@@ -16,13 +17,18 @@ export default function CareerCounseling() {
     if (!type) return;
 
     setLoading(true);
-    fetch(`/api/career/${type}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setCareerData(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+api
+  .get(`/career/${type}`)
+  .then((res) => {
+    setCareerData(res.data);
+  })
+  .catch((err) => {
+    console.error("Career API error:", err);
+  })
+  .finally(() => {
+    setLoading(false);
+  });
+
   }, [type]);
 
   if (loading) {

@@ -1,4 +1,5 @@
 import React from "react";
+import api from "../lib/api";
 
 export default function RoadmapResult({ roadmap }) {
   if (!roadmap) return null;
@@ -12,20 +13,17 @@ export default function RoadmapResult({ roadmap }) {
 
   const downloadPdf = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/roadmap/pdf", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ roadmap }),
-      });
+      const res = await api.post(
+        "/roadmap/pdf",
+        { roadmap },
+        { responseType: "blob" }
+      );
 
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-
+      const url = window.URL.createObjectURL(res.data);
       const a = document.createElement("a");
       a.href = url;
       a.download = `${roadmap.mbti}_${roadmap.career}_Roadmap.pdf`;
       a.click();
-
       window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error("PDF download failed:", err);
