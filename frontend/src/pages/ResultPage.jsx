@@ -17,7 +17,6 @@ export default function ResultPage() {
   useEffect(() => {
     if (result) setResult(result);
   }, [result, setResult]);
-
   if (!result) {
     return (
       <div className="min-h-screen bg-[#3C2F2F] flex items-center justify-center text-center text-[#F7F4F1]">

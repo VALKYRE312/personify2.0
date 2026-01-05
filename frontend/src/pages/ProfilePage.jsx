@@ -33,11 +33,12 @@ export default function ProfilePage() {
     async function load() {
       setLoading(true);
       try {
-        const [pRes, cRes, tRes] = await Promise.all([
-          api.get(`/api/personality/${type}`),
-          api.get(`/api/career/${type}`),
-          api.get(`/api/therapy/${type}`),
-        ]);
+const [pRes, cRes, tRes] = await Promise.all([
+  api.get(`/personality/${type}`),
+  api.get(`/career/${type}`),
+  api.get(`/therapy/${type}`),
+]);
+
 
         if (!mounted) return;
 
