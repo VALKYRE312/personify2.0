@@ -29,7 +29,7 @@ def create_app():
                 "https://personify2-0-git-main-valkyre312s-projects.vercel.app",
             ],
             "allow_headers": ["Content-Type", "Authorization"],
-            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "methods": ["GET", "POST", "OPTIONS"],
         }
     },
     supports_credentials=True,
