@@ -61,13 +61,16 @@ def create_app():
     from routes.roadmap_pdf import roadmap_pdf_bp
     from routes.auth_google import google_bp, init_oauth
 
+    # Blueprints with /api prefix already defined in their own file
+    app.register_blueprint(personality_bp)
+    app.register_blueprint(career_bp)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(profile_bp)
+    app.register_blueprint(therapy_bp)
+    app.register_blueprint(therapy_data_bp)
+    
+    # Blueprints that need /api prefix added here
     app.register_blueprint(analyze_bp, url_prefix="/api")
-    app.register_blueprint(personality_bp, url_prefix="/api")
-    app.register_blueprint(career_bp, url_prefix="/api")
-    app.register_blueprint(auth_bp, url_prefix="/api")
-    app.register_blueprint(profile_bp, url_prefix="/api")
-    app.register_blueprint(therapy_bp, url_prefix="/api")
-    app.register_blueprint(therapy_data_bp, url_prefix="/api")
     app.register_blueprint(roadmap_bp, url_prefix="/api")
     app.register_blueprint(roadmap_pdf_bp, url_prefix="/api")
 
