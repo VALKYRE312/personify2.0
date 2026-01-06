@@ -49,7 +49,7 @@ def build_pdf(roadmap):
 
 
 @roadmap_pdf_bp.route("/roadmap/pdf", methods=["POST", "OPTIONS"])
-@cross_origin(origins="http://localhost:5173")
+@cross_origin()
 def roadmap_pdf():
     if request.method == "OPTIONS":
         return "", 200

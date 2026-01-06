@@ -3,7 +3,7 @@ import os
 from flask import Blueprint, redirect, session, url_for
 from authlib.integrations.flask_client import OAuth
 
-google_bp = Blueprint("google_auth", __name__)
+google_bp = Blueprint("google_auth", __name__, url_prefix="/api")
 oauth = OAuth()
 
 
@@ -40,4 +40,6 @@ def google_callback():
         "picture": user.get("picture"),
     }
 
-    return redirect("http://localhost:5173/profile")
+    return redirect((os.getenv("FRONTEND_URL", "http://localhost:5173")) + "/profile")
+
+

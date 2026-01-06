@@ -24,7 +24,7 @@ class AxisResult(TypedDict):
 ResultsDict = Dict[str, AxisResult]
 
 
-analyze_bp = Blueprint("analyze", __name__, url_prefix="/api")
+analyze_bp = Blueprint("analyze", __name__)
 
 
 # ---------- Types ----------
