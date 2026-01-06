@@ -1,6 +1,6 @@
 # backend/app.py
 import os
-from flask import Flask, request
+from flask import Flask, app
 from flask_cors import CORS
 from database.db import db
 from flask_jwt_extended import JWTManager
@@ -19,20 +19,21 @@ def create_app():
     JWTManager(app)
 
     CORS(
-        app,
-        resources={r"/api/*": {"origins": "*"}},
-        
-        supports_credentials=True,
-    )
-    
-    
-    @app.after_request
-    def add_cors_headers(response):
-         origin = request.headers.get("Origin")
-         if origin and "vercel.app" in origin:
-             response.headers["Access-Control-Allow-Origin"] = origin
-             response.headers["Access-Control-Allow-Credentials"] = "true"
-         return response
+    app,
+    resources={
+        r"/api/*": {
+            "origins": [
+                "http://localhost:5173",
+                "http://127.0.0.1:5173",
+                "https://personify2-0.vercel.app",
+                "https://personify2-0-git-main-valkyre312s-projects.vercel.app",
+            ],
+            "allow_headers": ["Content-Type", "Authorization"],
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        }
+    },
+    supports_credentials=True,
+)
 
 
     app.config.from_object("config.Config")
