@@ -23,8 +23,8 @@ def create_app():
         resources={r"/api/*": {"origins": [
             "http://localhost:5173",
             "http://127.0.0.1:5173",
-            "https://personify.netlify.app",  # later
-            "https://personify.vercel.app"
+            "https://personify2-0.vercel.app",  # later
+            "https://personify2-0-5y5ue4834-valkyre312s-projects.vercel.app"
         ]}},
         supports_credentials=True,
     )
@@ -52,7 +52,8 @@ def create_app():
     from routes.roadmap_pdf import roadmap_pdf_bp
     from routes.auth_google import google_bp, init_oauth
 
-    app.register_blueprint(analyze_bp)
+    app.register_blueprint(analyze_bp, url_prefix="/api")
+
     app.register_blueprint(personality_bp)
     app.register_blueprint(career_bp)
     app.register_blueprint(auth_bp)
