@@ -28,7 +28,7 @@ export default function RegisterPage() {
     setLoading(true);
 
 try {
-  const res = await api.post("/api/auth/register", form);
+  const res = await api.post("/auth/register", form);
 
   // ✅ get token + user from backend
   const token = res.data.access_token;
