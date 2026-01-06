@@ -153,12 +153,15 @@ def build_type(results: Dict[str, AxisResult]) -> str:
     return "".join(results[axis]["letter"] for axis in AXES)
 
 
-@analyze_bp.post("/analyze")
+@analyze_bp.route("/analyze", methods=["POST", "OPTIONS"])
 def analyze():
     """
     POST /api/analyze
     payload: { "answers": { "0": 4, "1": 2, ... } }  (1..5 scale)
     """
+    if request.method == "OPTIONS":
+        return "", 200
+    
     data = request.get_json(silent=True) or {}
     answers = data.get("answers", {})
 

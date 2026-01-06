@@ -118,7 +118,7 @@ export default function QuizPage() {
     setSubmitting(true);
     try {
 const payload = { answers };
-const res = await api.post("/analyze", payload);
+const res = await api.post("/api/analyze", payload);
 
 const result = res.data;
 

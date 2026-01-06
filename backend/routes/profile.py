@@ -16,8 +16,11 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 def allowed_file(filename: str) -> bool:
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@profile_bp.route("/upload-photo", methods=["POST"])
+@profile_bp.route("/upload-photo", methods=["POST", "OPTIONS"])
 def upload_photo():
+    if request.method == "OPTIONS":
+        return "", 200
+    
     if "photo" not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
 

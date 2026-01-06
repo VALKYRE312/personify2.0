@@ -263,7 +263,7 @@ async function handleSend() {
       userMessage: text,
     };
 
-    const res = await api.post("/therapy/chat", payload);
+    const res = await api.post("/api/therapy/chat", payload);
 
 const assistantText =
   res.data?.reply || "Sorry — I couldn't generate a response.";

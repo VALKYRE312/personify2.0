@@ -4,8 +4,11 @@ from personality_engine.roadmap_gemini import enrich_roadmap_with_gemini
 
 roadmap_bp = Blueprint("roadmap", __name__)
 
-@roadmap_bp.route("/roadmap", methods=["POST"])
+@roadmap_bp.route("/roadmap", methods=["POST", "OPTIONS"])
 def roadmap():
+    if request.method == "OPTIONS":
+        return "", 200
+    
     try:
         data = request.get_json(force=True, silent=True) or {}
 

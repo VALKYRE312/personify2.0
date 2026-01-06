@@ -18,22 +18,24 @@ def create_app():
 
     JWTManager(app)
 
+    # 🔧 CORS Configuration - supports production and development
+    allowed_origins = os.getenv(
+        "ALLOWED_ORIGINS",
+        "http://localhost:5173,http://127.0.0.1:5173"
+    ).split(",")
+    
     CORS(
-    app,
-    resources={
-        r"/api/*": {
-            "origins": [
-                "http://localhost:5173",
-                "http://127.0.0.1:5173",
-                "https://personify2-0.vercel.app",
-                "https://personify2-0-git-main-valkyre312s-projects.vercel.app",
-            ],
-            "allow_headers": ["Content-Type", "Authorization"],
-            "methods": ["GET", "POST", "OPTIONS"],
-        }
-    },
-    supports_credentials=True,
-)
+        app,
+        resources={
+            r"/*": {  # Allow all routes
+                "origins": allowed_origins,
+                "allow_headers": ["Content-Type", "Authorization"],
+                "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+                "expose_headers": ["Content-Type", "Authorization"],
+            }
+        },
+        supports_credentials=True,
+    )
 
 
     app.config.from_object("config.Config")

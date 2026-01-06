@@ -65,8 +65,11 @@ def register():
 # =========================
 # LOGIN  ✅ THIS WAS MISSING
 # =========================
-@auth_bp.route("/login", methods=["POST"])
+@auth_bp.route("/login", methods=["POST", "OPTIONS"])
 def login():
+    if request.method == "OPTIONS":
+        return "", 200
+    
     data = request.get_json() or {}
 
     email = (data.get("email") or "").strip().lower()
